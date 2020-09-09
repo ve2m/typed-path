@@ -10,10 +10,16 @@ export type TypedPathFunction<T> = (...args: any[]) => T;
 
 export type TypedPathWrapper<T, K = TypedPathKey> = (
     T extends (infer Z)[]
-        ? { [index: number]: TypedPathWrapper<Z, string> }
-        : T extends TypedPathFunction<infer RET>
-        ? (() => TypedPathWrapper<RET>) & { [P in keyof RET]: TypedPathWrapper<RET[P], P> }
-        : { [P in keyof T]: TypedPathWrapper<T[P], P> }
+        ? {
+            [index: number]: TypedPathWrapper<Z, string>
+        } : T extends TypedPathFunction<infer RET>
+            ? (
+                () => TypedPathWrapper<RET>
+            ) & {
+                [P in keyof RET]: TypedPathWrapper<RET[P], P>
+            } : {
+                [P in keyof T]: TypedPathWrapper<T[P], P>
+            }
     ) & TypedPathNode<T, K>;
 
 const toStringMethods: (string | symbol | number)[] = [
