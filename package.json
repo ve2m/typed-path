@@ -29,8 +29,8 @@
   "scripts": {
     "test": "mocha --require ts-node/register index.spec.ts",
     "lint": "tslint 'src/**/*.ts' 'src/**/*.tsx'",
-    "prepush": "yarn lint && yarn build && git diff --exit-code",
-    "prepare": "yarn test && yarn build",
+    "prepush": "npm run lint && npm run build && git diff --exit-code",
+    "prepare": "npm test && npm run build",
     "build": "tsc"
   },
   "devDependencies": {
